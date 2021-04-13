@@ -32,6 +32,22 @@ class ProjectsTest extends TestCase
     }
 
     /**
+     * a user can view a project.
+     *
+     * @test
+     */
+
+    public function a_user_can_view_a_project()
+    {
+        $this->withoutExceptionHandling();
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())
+             ->assertSee($project->title)
+             ->assertSee($project->description);
+    }
+
+    /**
      * check title errors.
      *
      * @test
