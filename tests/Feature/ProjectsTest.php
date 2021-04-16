@@ -38,7 +38,7 @@ class ProjectsTest extends TestCase
      * @test
      */
 
-    public function only_authenticsted_users_can_create_a_project()
+    public function guests_cannot_create_projects()
     {
         // $this->withoutExceptionHandling();
 
@@ -48,19 +48,66 @@ class ProjectsTest extends TestCase
     }
 
     /**
+     * only authenticated users can view projects.
+     *
+     * @test
+     */
+
+    public function guests_cannot_view_projects()
+    {
+        $this->get('/projects')->assertRedirect('login');
+    }
+
+    /**
      * a user can view a project.
      *
      * @test
      */
 
-    public function a_user_can_view_a_project()
+    /**
+     * only authenticated users can view their projects.
+     *
+     * @test
+     */
+
+    public function guests_cannot_view_a_single_project()
     {
-        $this->withoutExceptionHandling();
-        $project = factory('App\Project')->create();
+        $project  = factory('App\Project')->create();
+
+        $this->get($project->path())->assertRedirect('login');
+    }
+
+    /**
+     * a user can view a project.
+     *
+     * @test
+     */
+
+    public function a_user_can_view_their_project()
+    {
+        $this->be(factory('App\User')->create());
+
+        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
              ->assertSee($project->title)
              ->assertSee($project->description);
+    }
+
+    /**
+     * a user cannot view other users projects
+     *
+     * @test
+     */
+
+    public function an_authenticated_user_cannot_view_the_projects_of_others()
+    {
+        $this->be(factory('App\User')->create());
+
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())
+             ->assertStatus(403);
     }
 
     /**
