@@ -17,13 +17,11 @@
 			<main class="mt-5">
 				<h4 style="margin-right: auto;" class="text-secondary">Tasks</h4>
 
+				@foreach($project->tasks as $task)
 				<div class="card p-3 mb-3">
-					<div>{{$project->description}}</div>
+					<div>{{ $task->body }}</div>
 				</div>
-
-				<div class="card p-3 mb-3">
-					<div>{{$project->description}}</div>
-				</div>
+				@endforeach
 
 				<h4 style="margin-right: auto;" class="text-secondary mt-5">General Notes</h4>
 				<div class="card p-3">
