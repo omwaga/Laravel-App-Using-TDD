@@ -1,19 +1,25 @@
 @extends('layouts.app')
 @section('content')
 <div class="row justify-content-center">
-	<div class="col-md-8">
-		<div style="display: flex; align-items: center;">
-			<h1 style="margin-right: auto;">BirdBoard</h1>
-			<a href="/projects/create">New Project</a>
+	<div class="col-md-12">
+		<div style="display: flex; align-items: center;" class="m-2">
+			<h4 style="margin-right: auto;" class="text-secondary">My Projects</h4>
+			<a href="/projects/create" class="btn btn-danger">New Project</a>
 		</div>
 
-		<ul>
+		<div class="row">
 			@forelse($projects as $project)
-			<li><a href="{{$project->path()}}">{{$project->title}}</a></li>
+			<div class="card col-md-4 shadow rounded py-3 m-2">
+				<h3 class="border-left border-lg border-danger">
+					<a href="{{$project->path()}}" class="h4 text-dark" style="text-decoration: none;">{{$project->title}}</a>
+				</h3>
+				<div>{{ Str::limit($project->description, 100, $end = '...')}}</div>
+			</div>
 			@empty
-			<li>No data yet</li>
+			<div>No projects added.</div>
 			@endforelse
-		</ul>
+		</div>
+
 	</div>
 </div>
 @endsection
