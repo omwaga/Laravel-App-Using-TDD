@@ -31,6 +31,24 @@ class ProjectTasksTest extends TestCase
     }
 
     /**
+     * only the owner of a project may add task.
+     *
+     * @test
+     */
+
+    public function only_the_owner_of_a_project_may_add_task()
+    {
+        $this->signIn();
+
+        $project = factory(Project::class)->create();
+
+        $this->post($project->path().'/tasks', ['body' => 'task body'])
+             ->assertStatus(403);
+
+        $this->assertDatabaseMissing('tasks', ['body' => 'task body']);
+    }
+
+    /**
      * a atask requires a bosy.
      *
      * @test
