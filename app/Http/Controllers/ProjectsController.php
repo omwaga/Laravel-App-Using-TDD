@@ -38,12 +38,24 @@ class ProjectsController extends Controller
 	{
 		$attributes = request()->validate([
 			'title' => 'required',
-			'description' => 'required'
+			'description' => 'required',
+			'notes' => 'max:300'
 		]);
 
 		// $attributes['owner_id'] = auth()->id();
 
 		$project = auth()->user()->projects()->create($attributes);
+
+		return redirect($project->path());
+	}
+
+	public function update(Project $project)
+	{
+		$this->authorize('update', $project);
+
+		$project->update([
+			'notes' => request('notes')
+		]);
 
 		return redirect($project->path());
 	}

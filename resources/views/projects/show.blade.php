@@ -44,7 +44,16 @@
 
 				<h4 style="margin-right: auto;" class="text-secondary mt-5">General Notes</h4>
 				<div class="card p-3">
-					<div>{{$project->description}}</div>
+					<div>
+						<form method="POST" action="{{$project->path()}}">
+							@csrf
+							@method('PATCH')
+
+							<textarea class="form-control" name="notes" placeholder="Anything you want to make a note of ...">{{$project->notes}}</textarea>
+
+							<button type="submit" class="btn btn-danger mt-2">Save</button>
+						</form>
+					</div>
 				</div>
 			</main>
 
