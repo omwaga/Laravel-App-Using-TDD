@@ -5,7 +5,7 @@
 		<p style="margin-right: auto;" class="text-secondary">
 			<a href="/projects">My Projects</a> / {{$project->title}}
 		</p>
-		<a href="/projects/create" class="btn btn-danger">Add Tasks</a>
+		<a href="{{$project->path().'/edit'}}" class="btn btn-danger">Edit Project</a>
 	</div>
 
 	<div class="row">
