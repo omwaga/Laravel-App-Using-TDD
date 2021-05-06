@@ -62,6 +62,22 @@ class ManageProjectsTest extends TestCase
     }
 
     /**
+     * a user can update a project's general notes.
+     *
+     * @test
+     */
+
+    public function a_user_can_update_a_projects_general_notes()
+    {
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->owner)
+             ->patch($project->path(), $attributes = ['notes' => 'Changed']);
+
+        $this->assertDatabaseHas('projects', $attributes);
+    }
+
+    /**
      * only authenticated users can control projects.
      *
      * @test

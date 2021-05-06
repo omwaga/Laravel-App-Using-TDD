@@ -53,6 +53,15 @@
 
 							<button type="submit" class="btn btn-danger mt-2">Save</button>
 						</form>
+
+						@if($errors->any())
+						<div class="mt-3">
+							@foreach($errors->all() as $error)
+							<li class="text-sm text-danger">{{$error}}</li>
+							@endforeach
+						</div>
+						@endif
+
 					</div>
 				</div>
 			</main>
